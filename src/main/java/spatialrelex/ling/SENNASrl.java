@@ -54,7 +54,7 @@ public class SENNASrl {
     
     public static Map<Integer, List<String>> getReadOut(String pathToSenna, String[] params) throws IOException, InterruptedException {
         Runtime rt = Runtime.getRuntime();
-        String s = "cmd /C senna-win32.exe -iobtags -usrtokens -srl < log.txt";
+        String s = "senna-linux64 -iobtags -usrtokens -srl < log.txt";
         Process p;
         p = rt.exec(s, params, new File(pathToSenna));
 
@@ -78,7 +78,7 @@ public class SENNASrl {
         String[] params = new String[1];
         params[0] = "";
         
-        Map<Integer, List<String>> tokenSRLRoles = getReadOut("main\\resources\\senna\\", params);
+        Map<Integer, List<String>> tokenSRLRoles = getReadOut("main/resources/senna/", params);
         int token = 1;
         for (int startOffset : startOffsetSRLRoles.keySet()) {
             startOffsetSRLRoles.put(startOffset, tokenSRLRoles.get(token));

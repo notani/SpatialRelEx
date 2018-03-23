@@ -29,9 +29,9 @@ public class Main {
     public static File testDir;
     
     public static final String[] XML_EXTENSION = new String[]{"xml"}; 
-    public static final String RESOURCES_DIR = "main\\resources";
-    public static final String SVM_DIR = "main\\resources\\svm_light_TK";
-    public static final String MODEL_DIR = "main\\resources\\models";
+    public static final String RESOURCES_DIR = "main/resources";
+    public static final String SVM_DIR = "main/resources/svm_light_TK";
+    public static final String MODEL_DIR = "main/resources/models";
     
     public static boolean train = true;
     
@@ -44,8 +44,8 @@ public class Main {
             devDir = new File(args[3]);
         }   
         StanfordParser.initializeStanfordParser();
-        VerbNet.initializeVerbNet(new File("main\\resources\\verbnet.txt"));
-        GeneralInquirer.initializeGeneralInquirer(new File("main\\resources\\inquirer.txt"));
+        VerbNet.initializeVerbNet(new File("main/resources/verbnet.txt"));
+        GeneralInquirer.initializeGeneralInquirer(new File("main/resources/inquirer.txt"));
         WordNet.initializeWordNet();
         log = new FileOutputStream("log.txt");        
     }    
@@ -57,24 +57,24 @@ public class Main {
         trainer.setFeatures(relation);
         Features.setUniFeaturesSizes();   
         
-        String train = "main\\data\\train"+relation+".txt";
-        String model = RESOURCES_DIR+"\\models\\model"+relation+".txt"; 
+        String train = "main/data/train"+relation+".txt";
+        String model = RESOURCES_DIR+"/models/model"+relation+".txt"; 
         
         Main.train = false;
         tester.setFeatures(relation);
-        String test = "main\\data\\test"+relation+".txt";
+        String test = "main/data/test"+relation+".txt";
         tester.writeLabelledSVMData(new FileOutputStream(test), relation);    
         
-        String result = "main\\data\\result"+relation+".txt";        
+        String result = "main/data/result"+relation+".txt";        
         Evaluator.classify(test, model, result);
         
         Annotator.storeUnLabelledSVMData(tester.fileDocumentObject, relation);        
     }    
     
     public void markUpRawXMLWithRelations() throws SAXException, ParserConfigurationException, IOException, UnsupportedEncodingException, InterruptedException {
-        Collection<File> xmlFiles = FileUtils.listFiles(new File(RESOURCES_DIR+"\\space-eval\\train\\"), XML_EXTENSION, true);
-        xmlFiles.addAll(FileUtils.listFiles(new File(RESOURCES_DIR+"\\space-eval\\dev\\"), XML_EXTENSION, true));
-        xmlFiles.addAll(FileUtils.listFiles(new File(RESOURCES_DIR+"\\space-eval\\test\\"), XML_EXTENSION, true));
+        Collection<File> xmlFiles = FileUtils.listFiles(new File(RESOURCES_DIR+"/space-eval/train/"), XML_EXTENSION, true);
+        xmlFiles.addAll(FileUtils.listFiles(new File(RESOURCES_DIR+"/space-eval/dev/"), XML_EXTENSION, true));
+        xmlFiles.addAll(FileUtils.listFiles(new File(RESOURCES_DIR+"/space-eval/test/"), XML_EXTENSION, true));
         Trainer trainer = new Trainer(xmlFiles);
         trainer.generateTriplets();
         
@@ -86,8 +86,8 @@ public class Main {
         markUpRawXMLWithRelations("MOVELINK", trainer, tester);                     
         
         //store extracted trigger movers
-        String[] testArr = FileUtils.readFileToString(new File("main\\data\\testMOVELINK.txt")).split("\\n");
-        String[] resultArr = FileUtils.readFileToString(new File("main\\data\\resultMOVELINK.txt")).split("\\n");
+        String[] testArr = FileUtils.readFileToString(new File("main/data/testMOVELINK.txt")).split("/n");
+        String[] resultArr = FileUtils.readFileToString(new File("main/data/resultMOVELINK.txt")).split("/n");
         List<String> extractedTriggerMovers = Evaluator.getExtractedElements(testArr, resultArr);
         for (String extractedTriggerMover : extractedTriggerMovers)
             SpatialRelation.fileTriggerMoverRoleOtherElement.put(extractedTriggerMover, null);        
@@ -95,8 +95,8 @@ public class Main {
         for (String relation : SpatialRelation.ORDERED_SIEVES) {
             markUpRawXMLWithRelations(relation, trainer, tester);
             
-            testArr = FileUtils.readFileToString(new File("main\\data\\test"+relation+".txt")).split("\\n");
-            resultArr = FileUtils.readFileToString(new File("main\\data\\result"+relation+".txt")).split("\\n");
+            testArr = FileUtils.readFileToString(new File("main/data/test"+relation+".txt")).split("/n");
+            resultArr = FileUtils.readFileToString(new File("main/data/result"+relation+".txt")).split("/n");
             SpatialRelation.fileTriggerMoverRoleOtherElement = getMovelinkSubpart(testArr, resultArr, SpatialRelation.fileTriggerMoverRoleOtherElement, relation);                    
         }
         
@@ -111,9 +111,9 @@ public class Main {
         trainer.setFeatures(relation);
         Features.setUniFeaturesSizes();   
         
-        String train = "main\\data\\train"+relation+".txt";
+        String train = "main/data/train"+relation+".txt";
         trainer.writeLabelledSVMData(new FileOutputStream(train), relation);        
-        String model = "main\\data\\model"+relation+".txt";
+        String model = "main/data/model"+relation+".txt";
         Evaluator.train(Evaluator.relationBestC.get(relation), Evaluator.relationBestCost.get(relation), Evaluator.relationBestT.get(relation), train, model);        
     }    
     
@@ -148,16 +148,16 @@ public class Main {
         trainer.setFeatures(relation);
         Features.setUniFeaturesSizes();   
         
-        String train = "main\\data\\train"+relation+".txt";
+        String train = "main/data/train"+relation+".txt";
         trainer.writeLabelledSVMData(new FileOutputStream(train), relation);
         
         Main.train = false;
         tester.setFeatures(relation);
-        String test = "main\\data\\test"+relation+".txt";
+        String test = "main/data/test"+relation+".txt";
         tester.writeLabelledSVMData(new FileOutputStream(test), relation);    
         
-        String model = "main\\data\\model"+relation+".txt";
-        String result = "main\\data\\result"+relation+".txt";        
+        String model = "main/data/model"+relation+".txt";
+        String result = "main/data/result"+relation+".txt";        
         Evaluator.applyBestModel(relation, train, model, test, result);        
         
         Annotator.storeUnLabelledSVMData(tester.fileDocumentObject, relation);        
@@ -185,8 +185,8 @@ public class Main {
         trainAndMarkUpRawXMLWithRelations("MOVELINK", trainer, tester);             
         
         //store extracted trigger movers
-        String[] testArr = FileUtils.readFileToString(new File("main\\data\\testMOVELINK.txt")).split("\\n");
-        String[] resultArr = FileUtils.readFileToString(new File("main\\data\\resultMOVELINK.txt")).split("\\n");
+        String[] testArr = FileUtils.readFileToString(new File("main/data/testMOVELINK.txt")).split("/n");
+        String[] resultArr = FileUtils.readFileToString(new File("main/data/resultMOVELINK.txt")).split("/n");
         List<String> extractedTriggerMovers = Evaluator.getExtractedElements(testArr, resultArr);
         for (String extractedTriggerMover : extractedTriggerMovers)
             SpatialRelation.fileTriggerMoverRoleOtherElement.put(extractedTriggerMover, null);
@@ -194,8 +194,8 @@ public class Main {
         for (String relation : SpatialRelation.ORDERED_SIEVES) {
             trainAndMarkUpRawXMLWithRelations(relation, trainer, tester);
             
-            testArr = FileUtils.readFileToString(new File("main\\data\\test"+relation+".txt")).split("\\n");
-            resultArr = FileUtils.readFileToString(new File("main\\data\\result"+relation+".txt")).split("\\n");
+            testArr = FileUtils.readFileToString(new File("main/data/test"+relation+".txt")).split("/n");
+            resultArr = FileUtils.readFileToString(new File("main/data/result"+relation+".txt")).split("/n");
             SpatialRelation.fileTriggerMoverRoleOtherElement = getMovelinkSubpart(testArr, resultArr, SpatialRelation.fileTriggerMoverRoleOtherElement, relation);                    
         }
 
@@ -219,18 +219,18 @@ public class Main {
         trainer.setFeatures(relation);
         Features.setUniFeaturesSizes();
         //write svm training data for instances of this relation.
-        String train = "main\\data\\train"+relation+".txt";
+        String train = "main/data/train"+relation+".txt";
         trainer.writeLabelledSVMData(new FileOutputStream(train), relation);
 
         Main.train = false;
         developer.setFeatures(relation);
-        String devel = "main\\data\\test"+relation+".txt";
+        String devel = "main/data/test"+relation+".txt";
         developer.writeLabelledSVMData(new FileOutputStream(devel), relation);
 
         //develops RELATION model
         //in other words, optimizes C and Cost parameters for relation extraction
-        String model = "main\\data\\model"+relation+".txt";
-        String result = "main\\data\\result"+relation+".txt";
+        String model = "main/data/model"+relation+".txt";
+        String result = "main/data/result"+relation+".txt";
         Evaluator.develop(relation, train, model, devel, result);
     }
     
@@ -245,10 +245,10 @@ public class Main {
         
         developRelationExtractionModel("LINK", trainer, developer);                
         developRelationExtractionModel("MOVELINK", trainer, developer);     
-        
+
         //store extracted trigger movers
-        String[] testArr = FileUtils.readFileToString(new File("main\\data\\testMOVELINK.txt")).split("\\n");
-        String[] resultArr = FileUtils.readFileToString(new File("main\\data\\resultMOVELINK.txt")).split("\\n");
+        String[] testArr = FileUtils.readFileToString(new File("main/data/testMOVELINK.txt")).split("/n");
+        String[] resultArr = FileUtils.readFileToString(new File("main/data/resultMOVELINK.txt")).split("/n");
         List<String> extractedTriggerMovers = Evaluator.getExtractedElements(testArr, resultArr);
         for (String extractedTriggerMover : extractedTriggerMovers)
             SpatialRelation.fileTriggerMoverRoleOtherElement.put(extractedTriggerMover, null);                
@@ -294,15 +294,15 @@ public class Main {
             System.out.println("=======================================");
             System.out.println("To train and develop a new spatial relation extraction model, "
                     + "and annotate test data with spatial relations using the newly developed model.");
-            System.out.println("Usage: java -Dwordnet.database.dir=main\\resources\\wordnet-dict\\ main.java.spatialrelex.Main "
+            System.out.println("Usage: java -Dwordnet.database.dir=main/resources/wordnet-dict/ main.java.spatialrelex.Main "
                     + "-train <YOUR TRAIN DIRECTORY> "
                     + "-dev <YOUR DEVELOPMENT DIRECTORY> "
                     + "-test <YOUR TEST DIRECTORY>");
             System.out.println(" ");
             System.out.println("To annotate test data using our pre-trained spatial relation extraction models.");
-            System.out.println("Usage: java -Dwordnet.database.dir=main\\resources\\wordnet-dict\\ main.java.spatialrelex.Main "
+            System.out.println("Usage: java -Dwordnet.database.dir=main/resources/wordnet-dict/ main.java.spatialrelex.Main "
                     + "-test <YOUR TEST DIRECTORY>");
-            System.out.println("*The output in both cases will be writtent to the `src\\output\\` folder*.");
+            System.out.println("*The output in both cases will be writtent to the `src/output/` folder*.");
             System.out.println("=======================================");
             
             System.exit(1);

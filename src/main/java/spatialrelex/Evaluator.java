@@ -203,8 +203,8 @@ public class Evaluator {
         //Optional roles for MOVELINK are extracted only for trigger-mover pairs that were already extracted
         List<String> movelinks = new ArrayList<>();
         if (!relation.equals("LINK") && !relation.equals("MOVELINK")) {
-            String[] testArr = FileUtils.readFileToString(new File("main\\data\\testMOVELINK.txt")).split("\\n");
-            String[] resultArr = FileUtils.readFileToString(new File("main\\data\\resultMOVELINK.txt")).split("\\n");
+            String[] testArr = FileUtils.readFileToString(new File("main/data/testMOVELINK.txt")).split("\\n");
+            String[] resultArr = FileUtils.readFileToString(new File("main/data/resultMOVELINK.txt")).split("\\n");
             movelinks = getExtractedElements(testArr, resultArr);
         }
                 
@@ -213,10 +213,10 @@ public class Evaluator {
                 for (String t_value : T_VALUES) {                       
 
                     //train a model
-                    String command = Main.SVM_DIR+"\\svm_learn.exe -c "+c_value+" -j "+cost_value+" -C + -T "+t_value+" "+train+" "+model;
+                    String command = Main.SVM_DIR+"/svm_learn -c "+c_value+" -j "+cost_value+" -C + -T "+t_value+" "+train+" "+model;
                     ExternalCommand.run(command); 
                     //test the trained model
-                    command = Main.SVM_DIR+"\\svm_classify.exe "+test+" "+model+" "+result;
+                    command = Main.SVM_DIR+"/svm_classify "+test+" "+model+" "+result;
                     ExternalCommand.run(command);                 
 
                     //compute tp, fp, recall, precision and f-score of result from test
@@ -250,10 +250,10 @@ public class Evaluator {
                 
         //get relation extraction results on best parameter combination
         //train a model
-        String command = Main.SVM_DIR+"\\svm_learn.exe -c "+bestC+" -j "+bestCost+" -C + -T "+bestT+" "+train+" "+model;
+        String command = Main.SVM_DIR+"/svm_learn -c "+bestC+" -j "+bestCost+" -C + -T "+bestT+" "+train+" "+model;
         ExternalCommand.run(command); 
         //test the trained model
-        command = Main.SVM_DIR+"\\svm_classify.exe "+test+" "+model+" "+result;
+        command = Main.SVM_DIR+"/svm_classify "+test+" "+model+" "+result;
         ExternalCommand.run(command);                             
         
         Main.log.write(("for "+relation+" on DEV data\n").getBytes());
@@ -262,12 +262,12 @@ public class Evaluator {
     }     
     
     public static void train(String c_value, String cost_value, String t_value, String train, String model) {
-        String command = Main.SVM_DIR+"\\svm_learn.exe -c "+c_value+" -j "+cost_value+" "+train+" "+model;
+        String command = Main.SVM_DIR+"/svm_learn -c "+c_value+" -j "+cost_value+" "+train+" "+model;
         ExternalCommand.run(command);         
     }
     
     public static void classify(String test, String model, String result) {
-        String command = Main.SVM_DIR+"\\svm_classify.exe "+test+" "+model+" "+result;
+        String command = Main.SVM_DIR+"/svm_classify "+test+" "+model+" "+result;
         ExternalCommand.run(command);                         
     }
     
@@ -324,8 +324,8 @@ public class Evaluator {
             if (SpatialRelation.ORDERED_SIEVES.contains(relation))
                 continue;
             
-            String[] testArr = FileUtils.readFileToString(new File("main\\data\\test"+relation+".txt")).split("\\n");
-            String[] resultArr = FileUtils.readFileToString(new File("main\\data\\result"+relation+".txt")).split("\\n");
+            String[] testArr = FileUtils.readFileToString(new File("main/data/test"+relation+".txt")).split("\\n");
+            String[] resultArr = FileUtils.readFileToString(new File("main/data/result"+relation+".txt")).split("\\n");
             
             fileTriggerMoverRoleOtherElement = getMovelinkSubpart(testArr, resultArr, fileTriggerMoverRoleOtherElement, relation);
         }

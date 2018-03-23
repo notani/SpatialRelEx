@@ -92,7 +92,7 @@ public class StanfordParser {
             }
                
             //write the tokenized sentence to an output file
-            FileOutputStream output = new FileOutputStream(Main.RESOURCES_DIR+"\\senna\\log.txt");
+            FileOutputStream output = new FileOutputStream(Main.RESOURCES_DIR+"/senna/log.txt");
             output.write(sentenceStr.getBytes());
             //the semantic roles labels for the sentence are obtained by applying SENNA
             startOffsetSRLRoles = SENNASrl.getSRLRoles(startOffsetSRLRoles);

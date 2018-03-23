@@ -25,7 +25,7 @@ public class WordNet {
     public static WordNetDatabase database;    
     
     public static void initializeWordNet() {
-        database = WordNetDatabase.getFileInstance();    
+        database = WordNetDatabase.getFileInstance();
     }
     
     public static SpatialElement setWordNetSynsetsAndHypernyms(SpatialElement se, String word, String pos) {        
