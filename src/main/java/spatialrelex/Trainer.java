@@ -109,14 +109,10 @@ public class Trainer {
                 SpatialRelation sr = tripletsSpatialRelations.get(triplet);
                 
                 String featureStr = sr.features.toString(sr).replaceAll("\\s+", " ").trim();
-                
-                output.write((sr.classValue+" "+featureStr+" # "+file+"-"+triplet+"\n").getBytes());   
-                
-            }  
-            
+
+                output.write((sr.classValue+" "+featureStr+" # "+file+"-"+triplet+"\n").getBytes());
+            }
             //document.relationTripletsSpatialRelations.remove(relation);
         }
     }
-        
-    
 }

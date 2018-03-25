@@ -101,6 +101,5 @@ public class Annotator {
                 sr.featureStr = sr.features.toString(sr).replaceAll("\\s+", " ").trim();
             }  
         }
-    }    
-    
+    }
 }

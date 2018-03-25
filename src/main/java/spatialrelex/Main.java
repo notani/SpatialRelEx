@@ -86,20 +86,19 @@ public class Main {
         markUpRawXMLWithRelations("MOVELINK", trainer, tester);                     
         
         //store extracted trigger movers
-        String[] testArr = FileUtils.readFileToString(new File("main/data/testMOVELINK.txt")).split("/n");
-        String[] resultArr = FileUtils.readFileToString(new File("main/data/resultMOVELINK.txt")).split("/n");
+        String[] testArr = FileUtils.readFileToString(new File("main/data/testMOVELINK.txt")).split("\\r?\\n");
+        String[] resultArr = FileUtils.readFileToString(new File("main/data/resultMOVELINK.txt")).split("\\r?\\n");
         List<String> extractedTriggerMovers = Evaluator.getExtractedElements(testArr, resultArr);
         for (String extractedTriggerMover : extractedTriggerMovers)
             SpatialRelation.fileTriggerMoverRoleOtherElement.put(extractedTriggerMover, null);        
         
         for (String relation : SpatialRelation.ORDERED_SIEVES) {
             markUpRawXMLWithRelations(relation, trainer, tester);
-            
-            testArr = FileUtils.readFileToString(new File("main/data/test"+relation+".txt")).split("/n");
-            resultArr = FileUtils.readFileToString(new File("main/data/result"+relation+".txt")).split("/n");
-            SpatialRelation.fileTriggerMoverRoleOtherElement = getMovelinkSubpart(testArr, resultArr, SpatialRelation.fileTriggerMoverRoleOtherElement, relation);                    
+            System.out.println(relation);
+            testArr = FileUtils.readFileToString(new File("main/data/test"+relation+".txt")).split("\\r?\\n");
+            resultArr = FileUtils.readFileToString(new File("main/data/result"+relation+".txt")).split("\\r?\\n");
+            SpatialRelation.fileTriggerMoverRoleOtherElement = getMovelinkSubpart(testArr, resultArr, SpatialRelation.fileTriggerMoverRoleOtherElement, relation);
         }
-        
         Annotator annotator = new Annotator(tester.fileDocumentObject);
         annotator.markUpSpatialRelations();        
     }
@@ -185,8 +184,8 @@ public class Main {
         trainAndMarkUpRawXMLWithRelations("MOVELINK", trainer, tester);             
         
         //store extracted trigger movers
-        String[] testArr = FileUtils.readFileToString(new File("main/data/testMOVELINK.txt")).split("/n");
-        String[] resultArr = FileUtils.readFileToString(new File("main/data/resultMOVELINK.txt")).split("/n");
+        String[] testArr = FileUtils.readFileToString(new File("main/data/testMOVELINK.txt")).split("\\r?\\n");
+        String[] resultArr = FileUtils.readFileToString(new File("main/data/resultMOVELINK.txt")).split("\\r?\\n");
         List<String> extractedTriggerMovers = Evaluator.getExtractedElements(testArr, resultArr);
         for (String extractedTriggerMover : extractedTriggerMovers)
             SpatialRelation.fileTriggerMoverRoleOtherElement.put(extractedTriggerMover, null);
@@ -194,8 +193,8 @@ public class Main {
         for (String relation : SpatialRelation.ORDERED_SIEVES) {
             trainAndMarkUpRawXMLWithRelations(relation, trainer, tester);
             
-            testArr = FileUtils.readFileToString(new File("main/data/test"+relation+".txt")).split("/n");
-            resultArr = FileUtils.readFileToString(new File("main/data/result"+relation+".txt")).split("/n");
+            testArr = FileUtils.readFileToString(new File("main/data/test"+relation+".txt")).split("\\r?\\n");
+            resultArr = FileUtils.readFileToString(new File("main/data/result"+relation+".txt")).split("\\r?\\n");
             SpatialRelation.fileTriggerMoverRoleOtherElement = getMovelinkSubpart(testArr, resultArr, SpatialRelation.fileTriggerMoverRoleOtherElement, relation);                    
         }
 
@@ -247,8 +246,8 @@ public class Main {
         developRelationExtractionModel("MOVELINK", trainer, developer);     
 
         //store extracted trigger movers
-        String[] testArr = FileUtils.readFileToString(new File("main/data/testMOVELINK.txt")).split("/n");
-        String[] resultArr = FileUtils.readFileToString(new File("main/data/resultMOVELINK.txt")).split("/n");
+        String[] testArr = FileUtils.readFileToString(new File("main/data/testMOVELINK.txt")).split("\\r?\\n");
+        String[] resultArr = FileUtils.readFileToString(new File("main/data/resultMOVELINK.txt")).split("\\r?\\n");
         List<String> extractedTriggerMovers = Evaluator.getExtractedElements(testArr, resultArr);
         for (String extractedTriggerMover : extractedTriggerMovers)
             SpatialRelation.fileTriggerMoverRoleOtherElement.put(extractedTriggerMover, null);                

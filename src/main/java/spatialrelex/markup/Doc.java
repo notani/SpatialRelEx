@@ -290,9 +290,9 @@ public class Doc {
                         + "start=\""+se.start+"\" end=\""+se.end+"\" "+semanticType+"/>\n";       
             }
         }
-        
-        String[] test = FileUtils.readFileToString(new File("main\\data\\testLINK.txt")).split("\\n");
-        String[] result = FileUtils.readFileToString(new File("main\\data\\resultLINK.txt")).split("\\n");
+
+        String[] test = FileUtils.readFileToString(new File("main/data/testLINK.txt")).split("\\r?\\n");
+        String[] result = FileUtils.readFileToString(new File("main/data/resultLINK.txt")).split("\\r?\\n");
         outputStr += getPredictedLinksString(test, result);
         outputStr += getPredictedMovelinksString();
 
@@ -499,8 +499,8 @@ public class Doc {
      * @throws IOException 
      */
     public String getPredictedMovelinksString() throws IOException {        
-        String[] test = FileUtils.readFileToString(new File("main\\data\\testMOVELINK.txt")).split("\\n");
-        String[] result = FileUtils.readFileToString(new File("main\\data\\resultMOVELINK.txt")).split("\\n");
+        String[] test = FileUtils.readFileToString(new File("main/data/testMOVELINK.txt")).split("\\r?\\n");
+        String[] result = FileUtils.readFileToString(new File("main/data/resultMOVELINK.txt")).split("\\r?\\n");
         
         Map<String, Map<Double, Map<String, List<String>>>> predictedTriggerMoversOptionalRoles = getPredictedTriggerMovers(test, result);
         
@@ -509,8 +509,8 @@ public class Doc {
             if (relation.equals("LINK") || relation.equals("MOVELINK"))
                 continue;
             
-            test = FileUtils.readFileToString(new File("main\\data\\test"+relation+".txt")).split("\\n");
-            result = FileUtils.readFileToString(new File("main\\data\\result"+relation+".txt")).split("\\n");
+            test = FileUtils.readFileToString(new File("main/data/test"+relation+".txt")).split("\\r?\\n");
+            result = FileUtils.readFileToString(new File("main/data/result"+relation+".txt")).split("\\r?\\n");
             
             predictedTriggerMoversOptionalRoles = getPredictedOptionalRoles(test, result, relation, predictedTriggerMoversOptionalRoles);
         }
@@ -538,7 +538,7 @@ public class Doc {
             if (r < 0.0)
                 continue;
             String[] tripletIDs = test[i].split("#")[1].trim().split("\\-");
-            
+
             String trajector = tripletIDs[tripletIDs.length-3];            
             String landmark = tripletIDs[tripletIDs.length-2];
             String trigger = tripletIDs[tripletIDs.length-1];            

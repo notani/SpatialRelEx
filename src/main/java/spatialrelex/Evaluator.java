@@ -197,17 +197,17 @@ public class Evaluator {
         double p = 0.0;
                 
         //stores the total entities annotated in development data
-        String[] data = FileUtils.readFileToString(new File(test)).split("\\n");
+        String[] data = FileUtils.readFileToString(new File(test)).split("\\r?\\n");
         double total = getTotal(data);
         
         //Optional roles for MOVELINK are extracted only for trigger-mover pairs that were already extracted
         List<String> movelinks = new ArrayList<>();
         if (!relation.equals("LINK") && !relation.equals("MOVELINK")) {
-            String[] testArr = FileUtils.readFileToString(new File("main/data/testMOVELINK.txt")).split("\\n");
-            String[] resultArr = FileUtils.readFileToString(new File("main/data/resultMOVELINK.txt")).split("\\n");
+            String[] testArr = FileUtils.readFileToString(new File("main/data/testMOVELINK.txt")).split("\\r?\\n");
+            String[] resultArr = FileUtils.readFileToString(new File("main/data/resultMOVELINK.txt")).split("\\r?\\n");
             movelinks = getExtractedElements(testArr, resultArr);
         }
-                
+
         for (String c_value : C_VALUES) {            
             for (String cost_value : COST_VALUES) {
                 for (String t_value : T_VALUES) {                       
@@ -221,8 +221,8 @@ public class Evaluator {
 
                     //compute tp, fp, recall, precision and f-score of result from test
                     double[] tpFp = relation.equals("LINK") || relation.equals("MOVELINK") ? 
-                            getTpFp(data, FileUtils.readFileToString(new File(result)).split("\\n")) :
-                            getTpFp(data, FileUtils.readFileToString(new File(result)).split("\\n"), movelinks);
+                            getTpFp(data, FileUtils.readFileToString(new File(result)).split("\\r?\\n")) :
+                            getTpFp(data, FileUtils.readFileToString(new File(result)).split("\\r?\\n"), movelinks);
 
                     double tempRecall = getRecall(tpFp[0], total);
                     double tempPrecision = getPrecision(tpFp[0], tpFp[1]);
@@ -256,9 +256,9 @@ public class Evaluator {
         command = Main.SVM_DIR+"/svm_classify "+test+" "+model+" "+result;
         ExternalCommand.run(command);                             
         
-        Main.log.write(("for "+relation+" on DEV data\n").getBytes());
-        Main.log.write(("best c-value: "+bestC+"; best cost: "+bestCost+"; best t-value: "+bestT+"\n").getBytes());
-        Main.log.write(("r: "+r+"; p: "+p+"; f: "+bestFscore+"\n\n").getBytes());
+        Main.log.write(("for "+relation+" on DEV data\\r?\\n").getBytes());
+        Main.log.write(("best c-value: "+bestC+"; best cost: "+bestCost+"; best t-value: "+bestT+"\\r?\\n").getBytes());
+        Main.log.write(("r: "+r+"; p: "+p+"; f: "+bestFscore+"\\r?\\n\\r?\\n").getBytes());
     }     
     
     public static void train(String c_value, String cost_value, String t_value, String train, String model) {
@@ -323,13 +323,11 @@ public class Evaluator {
         for (String relation : SpatialRelation.RELATION_ROLENAME.keySet()) {            
             if (SpatialRelation.ORDERED_SIEVES.contains(relation))
                 continue;
-            
-            String[] testArr = FileUtils.readFileToString(new File("main/data/test"+relation+".txt")).split("\\n");
-            String[] resultArr = FileUtils.readFileToString(new File("main/data/result"+relation+".txt")).split("\\n");
-            
+            String[] testArr = FileUtils.readFileToString(new File("main/data/test"+relation+".txt")).split("\\r?\\n");
+            String[] resultArr = FileUtils.readFileToString(new File("main/data/result"+relation+".txt")).split("\\r?\\n");
+
             fileTriggerMoverRoleOtherElement = getMovelinkSubpart(testArr, resultArr, fileTriggerMoverRoleOtherElement, relation);
         }
-        
         return fileTriggerMoverRoleOtherElement;
     }
     

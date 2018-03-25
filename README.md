@@ -53,6 +53,8 @@ java -Dwordnet.database.dir=main/resources/wordnet-dict/ main.java.spatialrelex.
 
 ```shell
 java -Dwordnet.database.dir=main/resources/wordnet-dict/ main.java.spatialrelex.Main -test <YOUR TEST DIRECTORY>
+
+java -Dwordnet.database.dir=main/resources/wordnet-dict/ main.java.spatialrelex.Main -test main/resources/space-eval/test
 ```
 
 *The annotated output in both cases will be written to the `src/output/` folder*.
