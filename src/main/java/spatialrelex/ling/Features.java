@@ -431,7 +431,7 @@ public class Features {
                 Integer.toString(se2.startToken - se1.endToken) : 
                 Integer.toString(se1.startToken - se2.endToken);
         
-        distance = se1.startToken < se2.startToken ? "-"+distance : distance;
+        distance = se1.startToken < se2.startToken ? distance : distance;
         
         return distance;
     }

@@ -58,7 +58,7 @@ public class Trainer {
      */
     public void setFeatures(String relation) throws IOException {
         for (String file : fileDocumentObject.keySet()) {
-            
+            System.out.println(file);
             Doc document = fileDocumentObject.get(file);
             
             Map<String, SpatialRelation> tripletsSpatialRelations = document.relationTripletsSpatialRelations.get(relation);

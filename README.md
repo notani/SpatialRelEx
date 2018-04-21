@@ -33,7 +33,7 @@ for file in `find /path/to/stanford-corenlp/ -name "*.jar"`; do export CLASSPATH
 for file in `find /path/to/apache-commons-io/ -name "*.jar"`; do export CLASSPATH="$CLASSPATH:`realpath $file`"; done
 
 # WordNet
-CLASSPATH=$CLASSPATH:/path/to/main/resources/jaws-bin.jar
+export CLASSPATH=$CLASSPATH:`pwd`/src/main/resources/jaws-bin.jar
 ```
 
 You may write them in your `.bashrc`.
